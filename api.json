@@ -1,0 +1,399 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "carpiano",
+        "version": "1.0",
+        "description": "API para instalaciones de la muestra del proyecto PRIMAR.",
+        "contact": {
+            "name": "Miguel Pagano",
+            "email": "miguel.pagano@unc.edu.ar"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://localhost:4430/",
+            "description": "Servidor de desarrollo"
+        },
+        {
+            "url": "https://tecno.unc.edu.ar",
+            "description": "Servidor de producción"
+        }
+    ],
+    "tags": [
+        {
+            "name": "instalacion"
+        },
+        {
+            "name": "pantalla"
+        },
+        {
+            "name": "parlante"
+        }
+    ],
+    "paths": {
+        "/instalacion/lista": {
+            "get": {
+                "tags": [
+                    "instalacion"
+                ],
+                "description": "Lista todas las instalaciones conocidas",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/instalacion"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/instalacion/{id}": {
+            "get": {
+                "tags": [
+                    "instalacion"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "description": "Obtiene detalles de la instalación {id}",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/instalacion"
+                                }
+                            }
+                        },
+                        "links": {
+                            "/pantalla/lista": {
+                                "description": "Lista de pantallas para esta instalación"
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    }
+                }
+            }
+        },
+        "/pantalla/lista": {
+            "get": {
+                "tags": [
+                    "pantalla"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/pantalla"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pantalla/{id}": {
+            "get": {
+                "tags": [
+                    "pantalla"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "description": "Obtiene detalles de la pantalla {id}",
+                "responses": {
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/pantalla"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/parlante/lista": {
+            "get": {
+                "tags": [
+                    "parlante"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/parlante"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/parlante/{id}": {
+            "get": {
+                "tags": [
+                    "parlante"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "description": "Obtiene detalles de la parlante {id}",
+                "responses": {
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/parlante"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/links": {
+            "get": {
+                "tags": [
+                    "links"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/link"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "id": {
+                "in": "path",
+                "schema": {
+                    "type": "integer"
+                },
+                "required": true,
+                "name": "id"
+            }
+        },
+        "responses": {
+            "404": {
+                "description": "No existe ese elemento en la colección."
+            }
+        },
+        "schemas": {
+            "instalacion": {
+                "title": "Instalación",
+                "description": "Una instalación de la obra del proyecto PRIMAR.",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Identificador único para cada instalacion",
+                        "type": "integer"
+                    },
+                    "lugar": {
+                        "description": "Nombre simbólico del lugar",
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "description": "Dirección postal del lugar",
+                        "type": "string"
+                    },
+                    "ubicacion": {
+                        "description": "Ubicación para google maps.",
+                        "type": "string"
+                    },
+                    "desde": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "hasta": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "id",
+                    "lugar"
+                ]
+            },
+            "pantalla": {
+                "title": "Pantalla",
+                "description": "Pantalla presente en una instalación",
+                "properties": {
+                    "id": {
+                        "description": "Identificador único para cada pantalla",
+                        "type": "integer"
+                    },
+                    "descripcion": {
+                        "description": "Descripción de lo que se ve en la pantalla",
+                        "type": "string"
+                    },
+                    "ancho": {
+                        "type": "integer",
+                        "description": "Ancho en pulgadas"
+                    },
+                    "altura": {
+                        "type": "integer",
+                        "description": "Altura en pulgadas"
+                    },
+                    "sonido": {
+                        "type": "boolean",
+                        "description": "Esta pantalla emite sonido?"
+                    },
+                    "manipulable": {
+                        "type": "boolean",
+                        "description": "Esta pantalla es afectable por visitantes?"
+                    }
+                },
+                "required": [
+                    "id",
+                    "descripcion",
+                    "manipulable"
+                ]
+            },
+            "parlante": {
+                "title": "Parlante",
+                "description": "Parlante presente en una instalación",
+                "properties": {
+                    "id": {
+                        "description": "Identificador único para cada parlante",
+                        "type": "integer"
+                    },
+                    "descripcion": {
+                        "description": "Descripción de lo que se escucha en el parlante",
+                        "type": "string"
+                    },
+                    "manipulable": {
+                        "type": "boolean",
+                        "description": "Este parlante es afectable por visitantes?"
+                    }
+                },
+                "required": [
+                    "id",
+                    "descripcion",
+                    "manipulable"
+                ]
+            },
+            "integrante": {
+                "title": "Integrante",
+                "description": "Persona que integra el equipo",
+                "properties": {
+                    "nombre": {
+                        "description": "Nombre de la persona",
+                        "type": "string",
+                        "nullable": false
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "mail de la persona",
+                        "nullable": true
+                    },
+                    "bio": {
+                        "type": "string",
+                        "format": "multiline",
+                        "nullable": true
+                    },
+                    "foto": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "nombre"
+                ]
+            },
+            "texto": {
+                "title": "Documento de texto",
+                "description": "Texto de la obra",
+                "properties": {
+                    "titulo": {
+                        "description": "Título del texto",
+                        "type": "string",
+                        "nullable": false
+                    },
+                    "resumen": {
+                        "type": "string",
+                        "description": "Resumen del texto",
+                        "nullable": false
+                    },
+                    "cuerpo": {
+                        "type": "object",
+                        "nullable": false
+                    }
+                },
+                "required": [
+                    "titulo",
+                    "resumen",
+                    "cuerpo"
+                ]
+            },
+            "link": {
+                "title": "Link externo",
+                "properties": {
+                    "titulo": {
+                        "description": "Título para el link",
+                        "type": "string",
+                        "nullable": false
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "url",
+                        "description": "url del link",
+                        "nullable": false
+                    }
+                },
+                "required": [
+                    "titulo",
+                    "url"
+                ]
+            }
+        }
+    }
+}
