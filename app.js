@@ -3,6 +3,7 @@ const express = require('@feathersjs/express');
 const socketio = require('@feathersjs/socketio');
 const https = require('https');
 const fs= require('fs');
+const cors = require('cors');
 
 // A messages service that allows to create new
 // and return all existing messages
@@ -34,6 +35,8 @@ class MessageService {
 // Creates an ExpressJS compatible Feathers application
 const app = express(feathers());
 
+app.use(cors());
+
 // Parse HTTP JSON bodies
 app.use(express.json());
 // Parse URL-encoded params
@@ -49,17 +52,13 @@ app.use('/messages', new MessageService());
 // Register a nicer error handler than the default Express one
 app.use(express.errorHandler());
 
-app.get('/links', function (req, res, next) {
+app.get('/content/:file(integrantes|links).json', function (req, res, next) {
   var options = {
     root: "data",
     dotfiles: 'deny',
-    headers: {
-      'x-timestamp': Date.now(),
-      'x-sent': true
-    }
   }
-
-  var fileName = "links.json"
+  console.log(req.params);
+  var fileName = req.params.file+".json"
   res.sendFile(fileName, options, function (err) {
     if (err) {
       next(err)
@@ -68,6 +67,7 @@ app.get('/links', function (req, res, next) {
     }
   })
 })
+
 
 // Add any new real-time connection to the `everybody` channel
 app.on('connection', connection =>

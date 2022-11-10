@@ -12,6 +12,7 @@
   "dependencies": {
     "@feathersjs/express": "^4.5.15",
     "@feathersjs/feathers": "^4.5.15",
-    "@feathersjs/socketio": "^4.5.15"
+    "@feathersjs/socketio": "^4.5.15",
+    "cors": "^2.8.5"
   }
 }

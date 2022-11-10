@@ -1,8 +1,23 @@
 {
-    [
+
+"integrantes" : [
+    {
         "nombre": "Miguel Pagano",
-        "email": "miguel.pagano@unc.edu.ar"
-        "bio": "Profesor en FAMAF."
+        "email": "miguel.pagano@unc.edu.ar",
+        "titulo": "Profesor en FAMAF.",
+        "bio": "Sarasa sarasa rasasa"
+    },
+    {
+        "nombre": "Gustavo Alcaraz",
+        "email": "galcaraz@unc.edu.ar",
+        "titulo": "Profesor en FA.",
+        "bio": "Sarasa sarasa rasasa"
+    },
+    {
+        "nombre": "Gonzalo Bifarella",
+        "email": "galcaraz@unc.edu.ar",
+        "titulo": "Profesor en FA.",
+        "bio": "Sarasa sarasa rasasa"
     }
 ]
 }
