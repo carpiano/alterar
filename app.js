@@ -52,6 +52,12 @@ app.use('/messages', new MessageService());
 // Register a nicer error handler than the default Express one
 app.use(express.errorHandler());
 
+app.put('/pantalla/:id/alterar', function (req,res) {
+  console.log('alterar:' + req.params.id);
+  console.log(req.body);
+  res.sendStatus(200);
+})
+
 app.get('/content/:file(integrantes|links).json', function (req, res, next) {
   var options = {
     root: "data",

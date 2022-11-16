@@ -138,6 +138,32 @@
                 }
             }
         },
+        "/pantalla/{id}/alterar": {
+            "patch": {
+                "requestBody": {
+                    "content": {
+                        "application/json" : {
+                        "schema": {
+                            "$ref": "#/components/schemas/alteracion"
+                        }
+                    }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK. El valor devuelto se corresponde con la variación hecha para que el cliente pueda informarlo.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "number",
+                                    "example": "2.3"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/parlante/lista": {
             "get": {
                 "tags": [
@@ -228,6 +254,31 @@
             }
         },
         "schemas": {
+            "alteracion": {
+                "title": "Alteración",
+                "description": "Diferentes elementos pueden ser susceptibles de recibir modificaciones a través de la interacción desde clientes, este tipo describe las propiedades de cada alteración.",
+                "properties": {
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "tipo": {
+                        "type": "string",
+                        "enum": [
+                            "bool",
+                            "int",
+                            "float"
+                        ]
+                    },
+                    "valor": {
+                        "type": "string",
+                        "description": "En realidad querríamos tipos dependientes para decir que el tipo de _valor_ depende del valor de _tipo_."
+                    },
+                    "duracion": {
+                        "type": "number",
+                        "description": "Tiempo en segundos que se mantiene la alteración"
+                    }
+                }
+            },
             "instalacion": {
                 "title": "Instalación",
                 "description": "Una instalación de la obra del proyecto PRIMAR.",
