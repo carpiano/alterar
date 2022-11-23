@@ -136,9 +136,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/pantalla/{id}/alterar": {
+            },
             "patch": {
                 "description": "Genera una alteración en la señal mostrada en la pantalla.",
                 "tags": ["pantalla"],

@@ -1,5 +1,6 @@
 const feathers = require('@feathersjs/feathers');
 const express = require('@feathersjs/express');
+const bodyParser = require('body-parser');
 const socketio = require('@feathersjs/socketio');
 const https = require('https');
 const fs= require('fs');
@@ -34,7 +35,7 @@ class MessageService {
 
 // Creates an ExpressJS compatible Feathers application
 const app = express(feathers());
-
+app.use(bodyParser.json());
 app.use(cors());
 
 // Parse HTTP JSON bodies
@@ -53,9 +54,9 @@ app.use('/messages', new MessageService());
 app.use(express.errorHandler());
 
 app.put('/pantalla/:id/alterar', function (req,res) {
-  console.log('alterar:' + req.params.id);
-  console.log(req.body);
-  res.sendStatus(200);
+  var alteracion = {id : req.params.id};
+  alteracion[req.body.nombre] = req.body.valor;
+  res.status(200).send(alteracion);
 })
 
 app.get('/content/:file(integrantes|links).json', function (req, res, next) {

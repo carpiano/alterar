@@ -10,6 +10,8 @@ Ver https://docs.google.com/presentation/d/1H2US5CeM88aj3oQ7BC9Cgj8EYpWy82lfRfdb
 
 Ver api.json
 
+# Para usar:
+$ node app_completa
 # TODO
 Testear mínimamente con Julio usando
 https://github.com/colinbdclark/osc.js-examples/blob/master/send-to-supercollider/index.js

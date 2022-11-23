@@ -1,18 +1,60 @@
 {
   "name": "alterar",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Back-end para instalaciones multimediales interactivas.",
+  "version": "0.0.0",
+  "homepage": "",
+  "private": true,
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Miguel Pagano",
+    "email": "miguel.pagano@gmail.com"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "test": "test/",
+    "config": "config/"
+  },
+  "engines": {
+    "node": "^19.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "scripts": {
+    "test": "npm run lint && npm run mocha",
+    "lint": "eslint src/. test/. --config .eslintrc.json --fix",
+    "dev": "nodemon src/",
+    "start": "node src/",
+    "mocha": "mocha test/ --recursive --exit"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ],
+    "ignore": []
+  },
   "dependencies": {
+    "@feathersjs/cli": "^4.8.0",
+    "@feathersjs/configuration": "^4.5.15",
+    "@feathersjs/errors": "^4.5.15",
     "@feathersjs/express": "^4.5.15",
     "@feathersjs/feathers": "^4.5.15",
     "@feathersjs/socketio": "^4.5.15",
-    "cors": "^2.8.5"
+    "@feathersjs/transport-commons": "^4.5.15",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "feathers-memory": "^4.1.0",
+    "helmet": "^4.6.0",
+    "serve-favicon": "^2.5.0",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "axios": "^1.2.0",
+    "eslint": "^8.27.0",
+    "mocha": "^9.2.2",
+    "nodemon": "^2.0.20"
   }
 }
