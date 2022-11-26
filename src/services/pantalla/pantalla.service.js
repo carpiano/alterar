@@ -1,9 +1,11 @@
-// Initializes the `pantalla` service on path `/pantalla`
+// Initializes the `Pantalla` service on path `/pantalla`
 const { Pantalla } = require('./pantalla.class');
+const createModel = require('../../models/pantalla.model');
 const hooks = require('./pantalla.hooks');
 
 module.exports = function (app) {
   const options = {
+    Model: createModel(app),
     paginate: app.get('paginate')
   };
 

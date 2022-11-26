@@ -5,18 +5,32 @@ const helmet = require('helmet');
 const cors = require('cors');
 const logger = require('./logger');
 
+// TODO: mover esto a un módulo propio.
+const OSC = require("osc-js");
+const osc = new OSC({
+    plugin: new OSC.DatagramPlugin({ send: { port: 5005, host: '127.0.0.1' } })
+  });
+
 const feathers = require('@feathersjs/feathers');
 const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
-const socketio = require('@feathersjs/socketio');
 
 
 const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
-const channels = require('./channels');
+
+// TODO: no estamos usando esto, lo necesitamos?
+// const socketio = require('@feathersjs/socketio');
+// const channels = require('./channels');
 
 const app = express(feathers());
+
+// TODO: Mover esto a un módulo propio.
+app.OSC = OSC;
+app.osc = osc;
+// TODO: por qué necesitamos abrir un puerto si sólo queremos enviar cosas?
+app.osc.open({ port: 9912 }) // bind socket to localhost:9912
 
 // Load app configuration
 app.configure(configuration());
@@ -32,6 +46,7 @@ app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', express.static(app.get('public')));
 
+// TODO: mover esto a un módulo propio.
 // Contenido más o menos estático que queremos servir.
 app.get('/content/:file(integrantes|links).json', function (req, res, next) {
   var options = {
@@ -51,14 +66,18 @@ app.get('/content/:file(integrantes|links).json', function (req, res, next) {
 
 // Set up Plugins and providers
 app.configure(express.rest());
-app.configure(socketio());
+
+// TODO: Por ahora no lo estamos usando.
+// app.configure(socketio());
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
 // Set up our services (see `services/index.js`)
 app.configure(services);
+
 // Set up event channels (see channels.js)
-app.configure(channels);
+// TODO: Necesitamos esto?
+//app.configure(channels);
 
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());
