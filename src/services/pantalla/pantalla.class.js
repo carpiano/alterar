@@ -6,7 +6,7 @@ const pantallas = [
         "descripcion": "video de perfomer",
         "ancho": 42,
         "altura": 66,
-        "sonido": true,
+        "sonido": false,
         "manipulable": false
       },
       {
@@ -26,7 +26,6 @@ exports.Pantalla = class Pantalla extends Service {
 
     async patch(id, data, params) {
         var alteracion = {id : id, valor: data.valor};
-        console.log(data);
         return alteracion;
     }
 };
