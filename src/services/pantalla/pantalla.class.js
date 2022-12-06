@@ -24,6 +24,18 @@ exports.Pantalla = class Pantalla extends Service {
         return pantallas;
     }
 
+    async get(id,params){
+        var p = null;
+        try {
+            p = pantallas.find(el=> el.id=id);
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+        return p;
+    }
+
+
     async patch(id, data, params) {
         var alteracion = {id : id, valor: data.valor};
         return alteracion;
