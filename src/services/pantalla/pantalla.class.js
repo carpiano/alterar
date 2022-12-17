@@ -8,16 +8,17 @@ const pantallas = [
         "altura": 66,
         "sonido": false,
         "manipulable": false
-      },
-      {
+    },
+    {
         "id": 2,
         "descripcion": "video abstracto",
-        "ancho": 42,
+        "ancho": 45,
         "altura": 66,
         "sonido": true,
         "manipulable": true
-      }
+    }
 ];
+
 exports.Pantalla = class Pantalla extends Service {
 
     async find(params){
@@ -27,7 +28,7 @@ exports.Pantalla = class Pantalla extends Service {
     async get(id,params){
         var p = null;
         try {
-            p = pantallas.find(el=> el.id=id);
+            p = pantallas.find(el=> el.id==id);
         } catch (error) {
             console.log(error);
             return null;

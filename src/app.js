@@ -6,10 +6,7 @@ const cors = require('cors');
 const logger = require('./logger');
 
 // TODO: mover esto a un módulo propio.
-const OSC = require("osc-js");
-const osc = new OSC({
-    plugin: new OSC.DatagramPlugin({ send: { port: 5005, host: '127.0.0.1' } })
-  });
+const { OSC , osc } = require("./osc");
 
 const feathers = require('@feathersjs/feathers');
 const configuration = require('@feathersjs/configuration');
@@ -26,17 +23,17 @@ const appHooks = require('./app.hooks');
 
 const app = express(feathers());
 
-// TODO: Mover esto a un módulo propio.
 app.OSC = OSC;
 app.osc = osc;
+
 // TODO: por qué necesitamos abrir un puerto si sólo queremos enviar cosas?
-app.osc.open({ port: 9912 }) // bind socket to localhost:9912
+app.osc.open({ port: 9912 });
 
 // Load app configuration
 app.configure(configuration());
 // Enable security, CORS, compression, favicon and body parsing
 app.use(helmet({
-  contentSecurityPolicy: false
+    contentSecurityPolicy: false
 }));
 app.use(cors());
 app.use(compress());
@@ -49,19 +46,18 @@ app.use('/', express.static(app.get('public')));
 // TODO: mover esto a un módulo propio.
 // Contenido más o menos estático que queremos servir.
 app.get('/content/:file(integrantes|links).json', function (req, res, next) {
-  var options = {
-    root: "data",
-    dotfiles: 'deny',
-  }
-  console.log(req.params);
-  var fileName = req.params.file+".json"
-  res.sendFile(fileName, options, function (err) {
-    if (err) {
-      next(err)
-    } else {
-      console.log('Sent:', fileName)
-    }
-  })
+    var options = {
+	root: "data",
+	dotfiles: 'deny',
+    }; 
+    var fileName = req.params.file+".json" ;
+    res.sendFile(fileName, options, function (err) {
+	if (err) {
+	    next(err) ;
+	} else {
+	    console.log('Sent:', fileName);
+	}
+    });
 });
 
 // Set up Plugins and providers
