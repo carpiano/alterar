@@ -6,7 +6,6 @@ module.exports = (options = {}) => {
   return async context => {
     const OSC = context.app.OSC;
     const id = context.id;
-    console.log("sending OSC data. Id: "+ id);
     const message = new OSC.Message('/pantalla/'+ id, context.data.valor);
     context.app.osc.send(message);
     return context;
