@@ -17,9 +17,11 @@ const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
 
+//const authentication = require('./authentication');
+
 // TODO: no estamos usando esto, lo necesitamos?
-// const socketio = require('@feathersjs/socketio');
-// const channels = require('./channels');
+const socketio = require('@feathersjs/socketio');
+const channels = require('./channels');
 
 const app = express(feathers());
 
@@ -28,23 +30,20 @@ app.osc = osc;
 
 // TODO: por qué necesitamos abrir un puerto si sólo queremos enviar cosas?
 app.osc.open({ port: 9912 });
-
 // Load app configuration
+
 app.configure(configuration());
 // Enable security, CORS, compression, favicon and body parsing
-app.use(helmet({
-    contentSecurityPolicy: false
-}));
-app.use(cors());
+
 app.use(compress());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
-// Host the public folder
+// app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
+// // Host the public folder
 app.use('/', express.static(app.get('public')));
 
-// TODO: mover esto a un módulo propio.
-// Contenido más o menos estático que queremos servir.
+// // todo: mover esto a un módulo propio.
+// // contenido más o menos estático que queremos servir.
 app.get('/content/:file(integrantes|links).json', function (req, res, next) {
     var options = {
 	root: "data",
@@ -60,25 +59,28 @@ app.get('/content/:file(integrantes|links).json', function (req, res, next) {
     });
 });
 
-// Set up Plugins and providers
+
+// // TODO: Por ahora no lo estamos usando.
+// // Set up Plugins and providers
+app.use(cors({origin: 'https://192.168.0.15:3000', credentials:true}));
 app.configure(express.rest());
-
-// TODO: Por ahora no lo estamos usando.
-// app.configure(socketio());
-
-// Configure other middleware (see `middleware/index.js`)
+app.configure(socketio(
+    {
+	path: '/ws/',
+	cors: {origin: 'https://192.168.0.15:3000', credentials:true},
+    }));
+// // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
-// Set up our services (see `services/index.js`)
+// app.configure(authentication);
+// // Set up our services (see `services/index.js`)
 app.configure(services);
 
 // Set up event channels (see channels.js)
-// TODO: Necesitamos esto?
-//app.configure(channels);
+app.configure(channels);
 
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
-
 app.hooks(appHooks);
 
 module.exports = app;

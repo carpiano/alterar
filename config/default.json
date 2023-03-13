@@ -1,6 +1,6 @@
 {
-  "host": "localhost",
+  "host": "192.168.0.15",
   "port": 4430,
   "public": "../public/",
-  "nedb": "../data"
+  "nedb": "../data/"
 }

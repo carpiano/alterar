@@ -10,10 +10,11 @@ module.exports = function (app) {
   };
 
   // Initialize our service with any options it requires
-  app.use('/pantalla', new Pantalla(options, app));
+    app.use('pantalla', new Pantalla(options, app), {events: ['locked']});
+    console.log(options.Model.db);
 
   // Get our initialized service so that we can register hooks
   const service = app.service('pantalla');
-
+  service.on('patched', (message) => console.log('pantalla patched', message))
   service.hooks(hooks);
 };
