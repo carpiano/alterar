@@ -15,6 +15,6 @@ module.exports = function (app) {
 
   // Get our initialized service so that we can register hooks
   const service = app.service('pantalla');
-  service.on('patched', (message) => console.log('pantalla patched', message))
+//  service.on('patched', (message) => console.log('pantalla patched', message))
   service.hooks(hooks);
 };

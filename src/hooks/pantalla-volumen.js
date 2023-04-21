@@ -2,34 +2,55 @@
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 const OSC = require("osc-js");
 
-const options = {
-  type: 'udp4',         // @param {string} 'udp4' or 'udp6'
-  send: {
-    host: '192.168.0.16',    // @param {string} Hostname of udp client for messaging
-    port: 7400               // @param {number} Port of udp client for messaging
-  }
-}
-const osc = new OSC({plugin: new OSC.DatagramPlugin(options)});
+const osc_addresses = {
+    interior_este: '192.168.0.139',
+    interior_oeste: '192.168.0.139',
+    exterior_noreste: '192.168.0.139',
+    exterior_suroeste: '192.168.0.139'
+};
 
-function enviarBundle(x,y,id){
+function oscParams(server) {
+    return{
+	type: 'udp4',
+	send: {
+	    host: server,
+	    port: 7400
+	}
+    };
+}
+
+const osc_interior_este = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['interior_este']))});
+const osc_interior_oeste = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['interior_este']))});
+const osc_exterior_noreste = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['interior_este']))});
+const osc_exterior_suroeste = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['interior_este']))});
+
+const osc_servers = {
+    interior_este: osc_interior_este,
+    interior_oeste: osc_interior_oeste,
+    exterior_noreste: osc_exterior_noreste,
+    exterior_suroeste: osc_exterior_suroeste,
+};
+
+
+function enviarBundle(x,y,osc_server){
     const Xmessage = new OSC.Message('/x/', x);
       const Ymessage = new OSC.Message('/y/'+ id, y);
       const pair = new OSC.Bundle([Xmessage, Ymessage]);
-      osc.send(pair);
+      osc_server.send(pair);
 }
 
-function enviarShift(x,y,id){
+function enviarShift(x,y,osc_server){
     /*
      */
     const message = new OSC.Message('/3/xy', x, y);
-    osc.send(message);
+    osc_server.send(message);
 }
 
-function enviarSlider(z,id){
+function enviarSlider(z,osc_server){
     /*
      */
     const message = new OSC.Message('/1/z', z);
-    osc.send(message);
+    osc_server.send(message);
 }
 
 module.exports = (options = {}) => {
@@ -37,12 +58,12 @@ module.exports = (options = {}) => {
       const id = context.id;
       const osc = context.app.osc;
       const OSC = context.app.OSC;
+      const pantalla = await context.app.service('pantalla').get(id);
+      const osc_server = osc_servers[pantalla.osc_server];
       if(context.data.nombre === 'shift') {
-	  console.log(context.data);
-	  enviarShift(context.data.x/1000, context.data.y/1000, id);
+	  enviarShift(context.data.x/1000, context.data.y/1000, osc_server);
       };
       if(context.data.nombre === 'slider') {
-	  console.log(context.data);
 	  enviarSlider(context.data.valor, id);
       };
     return context;

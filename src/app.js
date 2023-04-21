@@ -25,6 +25,8 @@ const channels = require('./channels');
 
 const app = express(feathers());
 
+// FIXME: frontend server address.
+app.cors_config = {origin: 'https://192.168.0.139:3000', credentials:true};
 app.OSC = OSC;
 app.osc = osc;
 
@@ -62,12 +64,12 @@ app.get('/content/:file(integrantes|links).json', function (req, res, next) {
 
 // // TODO: Por ahora no lo estamos usando.
 // // Set up Plugins and providers
-app.use(cors({origin: 'https://192.168.0.15:3000', credentials:true}));
+app.use(cors(app.cors_config));
 app.configure(express.rest());
 app.configure(socketio(
     {
 	path: '/ws/',
-	cors: {origin: 'https://192.168.0.15:3000', credentials:true},
+	cors: app.cors_config,
     }));
 // // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
