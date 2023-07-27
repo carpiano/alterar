@@ -26,7 +26,7 @@ const channels = require('./channels');
 const app = express(feathers());
 
 // FIXME: frontend server address.
-app.cors_config = {origin: 'https://192.168.0.139:3000', credentials:true};
+app.cors_config = {origin: 'https://carpiano.github.io', credentials:true};
 app.OSC = OSC;
 app.osc = osc;
 
@@ -84,5 +84,4 @@ app.configure(channels);
 app.use(express.notFound());
 app.use(express.errorHandler({ logger }));
 app.hooks(appHooks);
-
 module.exports = app;
