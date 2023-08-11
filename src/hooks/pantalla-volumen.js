@@ -3,10 +3,10 @@
 const OSC = require("osc-js");
 
 const osc_addresses = {
-    amarillo: '192.168.0.20',
-    rojo: '192.168.0.22',
-    azul: '192.168.0.19',
-    verde: '192.168.0.19'
+    ver_y_ser_visto: '192.168.1.102',
+    respirar: '192.168.1.103',
+    nuevas_pieles: '192.168.1.104',
+    que_hacemos: '192.168.1.101'
 };
 
 function oscParams(server) {
@@ -19,16 +19,16 @@ function oscParams(server) {
     };
 }
 
-const osc_amarillo = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['amarillo']))});
-const osc_rojo = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['rojo']))});
-const osc_azul = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['azul']))});
-const osc_verde = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['verde']))});
+const osc_ver_y_ser_visto = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['ver_y_ser_visto']))});
+const osc_respirar = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['respirar']))});
+const osc_nuevas_pieles = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['nuevas_pieles']))});
+const osc_que_hacemos = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['que_hacemos']))});
 
 const osc_servers = {
-    amarillo: osc_amarillo,
-    rojo: osc_rojo,
-    azul: osc_azul,
-    verde: osc_verde,
+    ver_y_ser_visto: osc_ver_y_ser_visto,
+    respirar: osc_respirar,
+    nuevas_pieles: osc_nuevas_pieles,
+    que_hacemos: osc_que_hacemos,
 };
 
 

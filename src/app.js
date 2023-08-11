@@ -26,7 +26,7 @@ const channels = require('./channels');
 const app = express(feathers());
 
 // FIXME: frontend server address.
-app.cors_config = {origin: 'https://carpiano.github.io', credentials:true};
+app.cors_config = {origin: 'https://una-nueva-piel.github.io', credentials:true};
 app.OSC = OSC;
 app.osc = osc;
 
