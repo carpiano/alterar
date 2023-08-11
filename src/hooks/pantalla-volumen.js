@@ -3,10 +3,10 @@
 const OSC = require("osc-js");
 
 const osc_addresses = {
-    interior_este: '192.168.0.20',
-    interior_oeste: '192.168.0.22',
-    exterior_noreste: '192.168.0.19',
-    exterior_suroeste: '192.168.0.19'
+    amarillo: '192.168.0.20',
+    rojo: '192.168.0.22',
+    azul: '192.168.0.19',
+    verde: '192.168.0.19'
 };
 
 function oscParams(server) {
@@ -19,16 +19,16 @@ function oscParams(server) {
     };
 }
 
-const osc_interior_este = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['interior_este']))});
-const osc_interior_oeste = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['interior_oeste']))});
-const osc_exterior_noreste = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['exterior_noreste']))});
-const osc_exterior_suroeste = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['exterior_suroeste']))});
+const osc_amarillo = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['amarillo']))});
+const osc_rojo = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['rojo']))});
+const osc_azul = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['azul']))});
+const osc_verde = new OSC({plugin: new OSC.DatagramPlugin(oscParams(osc_addresses['verde']))});
 
 const osc_servers = {
-    interior_este: osc_interior_este,
-    interior_oeste: osc_interior_oeste,
-    exterior_noreste: osc_exterior_noreste,
-    exterior_suroeste: osc_exterior_suroeste,
+    amarillo: osc_amarillo,
+    rojo: osc_rojo,
+    azul: osc_azul,
+    verde: osc_verde,
 };
 
 
